@@ -3,6 +3,8 @@ public class Echiquier {
     private Cellule[][] echiquier;
     private int taille;
 
+    private int nbReine = 0;
+
     private char libre = '-';
     private char reine = 'R';
     private char menacee= '*';
@@ -27,6 +29,7 @@ public class Echiquier {
     public void placerReine(int x, int y){
         if (echiquier[x][y].getTypeOccupation() == libre) {
             echiquier[x][y].setTypeOccupation(reine);
+            nbReine++;
             for (int X = 0; X < taille; X++) {
                 if (echiquier[X][y].getTypeOccupation() != reine) {
                     echiquier[X][y].setTypeOccupation(menacee);
@@ -113,7 +116,6 @@ public class Echiquier {
         int compteur = 0;
         int memoryCompteur = taille*taille;
         int check = 0;
-        int nbReine = 0;
         //int debug = 0;
         while (stop == false) {
             for (int x = 0; x < taille; x++) {
@@ -208,9 +210,12 @@ public class Echiquier {
                     }
                 }
             }
+            //System.out.println("Coordonnées choisie");
+            //System.out.println(memoryX);
+            //System.out.println(memoryY);
             placerReine(memoryX, memoryY);
-            nbReine++;
-            //System.out.println("Fin");
+            memoryCompteur = taille*taille;
+
             for (int x = 0; x < taille; x++){
                 for (int y = 0; y < taille; y++){
                     if (echiquier[x][y].getTypeOccupation() == libre){
@@ -225,7 +230,7 @@ public class Echiquier {
                 check = 0;
             }
             /*debug++;
-            if (debug == 2){
+            if (debug == 4){
                 stop = true;
             }*/
         }
@@ -239,6 +244,7 @@ public class Echiquier {
             }
             s = s + "\n";
         }
+        s = s + "Nombre de reine présente sur l'échiquier :" + nbReine + "\n";
         return s;
     }
 
